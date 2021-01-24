@@ -34,7 +34,7 @@ const MostrarArticulos = () => {
 
 const ContentArticles = () => {
   const [ page, SetPage ] = useState(1)
-  const [ pageSize, SetPageSize ] = useState(10)
+  const [ pageSize ] = useState(10)
   const [ response, isLoading ] = useFetch(process.env.REACT_APP_URL_API_ARTICLES+'/articles?pageSize=' + pageSize + '&page=' + page)
   const articles = response.articles
 
