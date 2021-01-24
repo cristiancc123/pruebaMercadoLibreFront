@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Pagination from '@material-ui/lab/Pagination';
+import 'antd/dist/antd.css';
+import { Image, Card , Col, Row } from 'antd';
 
-const articleImgStyle = {
-  width: 50,
-  height: 50,
-  borderRadius: '50%'
-}
-
-const articleStyle = {
-  width: 230,
-  height: 300,
-  border: '1px solid gray',
-  overflow: 'auto',
-  fontFamily: 'monospace'
-}
+// { Provider, Customer } 
+const MyContext = React.createContext()
+const { Meta } = Card;
 
 const useFetch = (url, initialState = []) => {
   const [ data , setData ] = useState(initialState)
@@ -33,7 +25,42 @@ const useFetch = (url, initialState = []) => {
     data,
     isFetching
   ]
+}
 
+const CargarImagen = (imageUrl) => {
+  return(
+    <Image src={imageUrl} height={250} />
+  )
+}
+
+const CargarCard = (article) => {
+  return(
+    <Card
+      hoverable
+      style={{ width: 400 }}
+      cover={CargarImagen(article.imageUrl)}>
+        <Meta title={ article.title } />
+        <br/>
+        <a href={article.url}>{article.url}</a>
+    </Card>
+  )
+}
+
+const MostrarArticulos = () => {
+
+  const context = useContext(MyContext)
+  const articles = context.articles
+  return(
+    <Row gutter={5}>
+      {articles && articles.map(article => (
+        <div key={article.id}>
+          <Col span={8}>
+          {CargarCard(article)}
+          </Col>
+        </div>
+      ))}
+    </Row>
+  )
 }
 
 const App = () => {
@@ -47,17 +74,12 @@ const App = () => {
   }
 
   return(
-    <div>
-      { isLoading && <h1>Cargando...</h1> }
-      {articles && articles.map(article => (
-        <div key={article.id} style={articleStyle}>
-          <p>Titulo: { article.title }</p>
-          <p><a href={article.url}>{article.url}</a></p>
-          <p><img src={article.imageUrl} alt='Article' style={articleImgStyle} /></p>
-        </div>
-      ))}
-      <Pagination count={response.totalPages} onChange={handleChangePage}/>
-    </div>
+    <MyContext.Provider value={{articles}}>
+      <div className="site-card-wrapper">
+        { isLoading ? <h1>Cargando...</h1> : <MostrarArticulos/> }
+        <Pagination count={response.totalPages} onChange={handleChangePage}/>
+      </div>
+    </MyContext.Provider>
   )
 }
 
