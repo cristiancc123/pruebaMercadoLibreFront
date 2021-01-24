@@ -1,4 +1,4 @@
-import CargarImagen from './LoadImage.js'
+import CargarImagen from './load-image.js'
 import 'antd/dist/antd.css';
 import { Card , Tooltip } from 'antd';
 

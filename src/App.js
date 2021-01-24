@@ -1,6 +1,6 @@
 /** Componente Principal */
 import React, { Component, useState } from 'react'
-import Articles from './components/Articles.js';
+import Articles from './components/articles.js';
 
 const App = () => {
     return(
