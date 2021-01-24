@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import Pagination from '@material-ui/lab/Pagination';
 import 'antd/dist/antd.css';
 import { Image, Card , Col, Row, Layout, Tooltip } from 'antd';
-import styled from 'styled-components'
+
 
 // { Provider, Customer } 
 const MyContext = React.createContext()
