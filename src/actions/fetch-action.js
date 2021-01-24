@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 /** Funcion que permite realizar peticiones al servidor */
 const useFetch = (url, initialState = []) => {

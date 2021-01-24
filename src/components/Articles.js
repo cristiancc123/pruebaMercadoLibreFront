@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import useFetch from '../actions/fetch-action.js'
 import CargarCard from '../actions/load-card.js'
 import Pagination from '@material-ui/lab/Pagination';
@@ -32,28 +32,33 @@ const MostrarArticulos = () => {
   )
 }
 
-
-
-/** Componente principal */
-const App = () => {
+const ContentArticles = () => {
   const [ page, SetPage ] = useState(1)
   const [ pageSize, SetPageSize ] = useState(10)
   const [ response, isLoading ] = useFetch('http://articulosmercadolibre/api/v2/articles?pageSize=' + pageSize + '&page=' + page)
   const articles = response.articles
- 
+
   const handleChangePage = (event, value) => {
     SetPage(value)
   }
 
   return(
-    <Layout>
-      <Header />
       <Content style={{ padding: '0 50px', paddingTop: '30px' }}>
         <MyContext.Provider value={{articles}}>
           { isLoading ? <h1>Cargando...</h1> : <MostrarArticulos/> }
           <Pagination count={response.totalPages} onChange={handleChangePage} style={{ paddingTop: '25px'}}/>
         </MyContext.Provider>
       </Content>
+  )
+}
+
+
+/** Componente principal */
+const App = () => {
+  return(
+    <Layout>
+      <Header />
+      <ContentArticles />
       <Footer />
     </Layout>
   )

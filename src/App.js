@@ -1,5 +1,5 @@
 /** Componente Principal */
-import React, { Component, useState } from 'react'
+import React from 'react'
 import Articles from './components/articles.js';
 
 const App = () => {
