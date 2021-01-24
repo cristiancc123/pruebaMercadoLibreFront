@@ -1,56 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
+import useFetch from '../actions/FetchAction.js'
+import CargarCard from '../actions/LoadCard.js'
 import Pagination from '@material-ui/lab/Pagination';
 import 'antd/dist/antd.css';
-import { Image, Card , Col, Row, Layout, Tooltip } from 'antd';
+import { Card , Col, Row, Layout } from 'antd';
 
 
 // { Provider, Customer } 
 const MyContext = React.createContext()
-const { Meta } = Card;
 const { Header, Footer, Content } = Layout;
 
-/** Funcion que permite realizar peticiones al servidor */
-const useFetch = (url, initialState = []) => {
-  const [ data , setData ] = useState(initialState)
-  const [ isFetching, setFetching ] = useState(true)
-  useEffect(() => {
-    setFetching(true)
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        setData(data)
-        setFetching(false)
-      })
-  }, [ url ])
-
-  return [
-    data,
-    isFetching
-  ]
-}
-
-/** Funcion que permite cargar una imagen */
-const CargarImagen = (imageUrl) => {
-  return(
-    <Image src={imageUrl} height={180} />
-  )
-}
-
-/** Funcion que permite cargar un elemento Card */
-const CargarCard = (article) => {
-  return(
-    <Card
-      hoverable
-      style={{ width: 300, margin: '5px'}}
-      cover={CargarImagen(article.imageUrl)}>
-        <Tooltip placement="topLeft" title={article.title}>
-          <Meta title={ article.title } />
-        </Tooltip>
-        <br/>
-        <Meta title={ <a href={article.url}>{article.url}</a> } />
-    </Card>
-  )
-}
 
 /** Funcion que permite mostrar el listado de articulos */
 const MostrarArticulos = () => {
